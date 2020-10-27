@@ -20,8 +20,8 @@ def remove_stop_words(text: str, stopwords: list):
     return " ".join([word for word in text_tokens if not word in stopwords])
 
 
-def preprocess_text(in_files_dir: str, out_files_dir: str, stopwords: list):
-    """this function to remove the stop words and punctuation
+def preprocess_text_in_folder(in_files_dir: str, out_files_dir: str, stopwords: list):
+    """this function to remove the stop words and punctuation and save the output to .txt file
     parameter:
     in_file_dir:string path input text files
     out_files_dir:string path output text files
@@ -39,6 +39,17 @@ def preprocess_text(in_files_dir: str, out_files_dir: str, stopwords: list):
             with open(out_file_txt, 'w') as output_file:
                 output_file.write(nopunctuation)
             output_file.close()
+
+
+def preprocess_text(text:str, stop_words_dir:str):
+    """this method remove stop words and the punctuation and return the text
+     parameter:
+     text: string of text
+     stop_word_dir: string of file stop words bath"""
+    stop_words_list = stop_words(stop_words_dir)
+    no_stop = remove_stop_words(text, stop_words_list)
+    no_punctuation = remove_punctuation(no_stop)
+    return no_punctuation
 
 
 def stop_words(file_path: str):
