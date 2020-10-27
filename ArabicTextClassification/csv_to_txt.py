@@ -2,7 +2,7 @@ import csv
 import pandas as pd
 import numpy as np
 import os
-from testdata.prprocessArabicText import preprocess_text
+from testArabicTextModel.prprocessArabicText import preprocess_text
 
 
 def csv_to_txt_train_test_group_without_preprocess(in_file_path: str, name_of_class: str, columns: list):
@@ -35,18 +35,24 @@ def csv_to_txt_train_test_group_without_preprocess(in_file_path: str, name_of_cl
     tra = 0
     tes = 0
     for row in csv.reader(train_dataset):
-        out_file = train_output_txt + "/{}.txt".format(tra)
-        with open(out_file, "w") as my_output_file:
-            my_output_file.write("".join(row))
-        my_output_file.close()
-        tra = tra + 1
+        if row[0] == columns[0]:
+            continue
+        else:
+            out_file = train_output_txt + "/{}.txt".format(tra)
+            with open(out_file, "w") as my_output_file:
+                my_output_file.write("".join(row))
+            my_output_file.close()
+            tra = tra + 1
     train_dataset.close()
     for row in csv.reader(test_dataset):
-        out_file = test_output_txt + "/{}.txt".format(tes)
-        with open(out_file, "w") as my_output_file:
-            my_output_file.write("".join(row))
-        my_output_file.close()
-        tes = tes + 1
+        if row[0] == columns[0]:
+            continue
+        else:
+            out_file = test_output_txt + "/{}.txt".format(tes)
+            with open(out_file, "w") as my_output_file:
+                my_output_file.write("".join(row))
+            my_output_file.close()
+            tes = tes + 1
     test_dataset.close()
 
 
@@ -80,23 +86,33 @@ def csv_to_txt_train_test_group_with_preprocess(in_file_path: str, name_of_class
     tra = 0
     tes = 0
     for row in csv.reader(train_dataset):
-        row_text = "".join(row)
-        row_after_process = preprocess_text(row_text, '/home/ahmad/Desktop/classificationTextProject/testdata/arabic-stop')
-        out_file = train_output_txt + "/{}.txt".format(tra)
-        with open(out_file, "w") as my_output_file:
-            my_output_file.write("".join(row_after_process))
-        my_output_file.close()
-        tra = tra + 1
+        if row[0] == columns[0]:
+            continue
+        else:
+            row_text = "".join(row)
+            row_after_process = preprocess_text(row_text,
+                                                '/home/ahmad/Desktop/classificationTextProject/testdata/arabic-stop')
+            out_file = train_output_txt + "/{}.txt".format(tra)
+            with open(out_file, "w") as my_output_file:
+                my_output_file.write("".join(row_after_process))
+            my_output_file.close()
+            tra = tra + 1
     train_dataset.close()
+    print("{} : train, count_files : {}".format(name_of_class, tra))
     for row in csv.reader(test_dataset):
-        row_text = "".join(row)
-        row_after_process = preprocess_text(row_text, '/home/ahmad/Desktop/classificationTextProject/testdata/arabic-stop')
-        out_file = test_output_txt + "/{}.txt".format(tes)
-        with open(out_file, "w") as my_output_file:
-            my_output_file.write("".join(row_after_process))
-        my_output_file.close()
-        tes = tes + 1
+        if row[0] == columns[0]:
+            continue
+        else:
+            # row_text = "".join(row)
+            # row_after_process = preprocess_text(row_text,
+            #                                     '/home/ahmad/Desktop/classificationTextProject/testdata/arabic-stop')
+            out_file = test_output_txt + "/{}.txt".format(tes)
+            with open(out_file, "w") as my_output_file:
+                my_output_file.write("".join(row))
+            my_output_file.close()
+            tes = tes + 1
     test_dataset.close()
+    print("{} : test, count_files : {}".format(name_of_class, tes))
 
 
 def csv_full_to_txt(files_dir: str, output_dir: str):
