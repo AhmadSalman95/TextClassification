@@ -2,7 +2,7 @@ import csv
 import pandas as pd
 import numpy as np
 import os
-from testArabicTextModel.prprocessArabicText import preprocess_text
+from ithelpClassification.prprocessArabicText import preprocess_text
 
 
 def csv_to_txt_train_test_group_without_preprocess(in_file_path: str, name_of_class: str, columns: list):
