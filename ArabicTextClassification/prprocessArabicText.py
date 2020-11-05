@@ -3,7 +3,10 @@ from nltk.tokenize import RegexpTokenizer
 import nltk
 import re
 
-def removeWeirdChars(text):
+def removeWeirdChars(text: str):
+    """this function remove the weird chars
+    :parameter
+    text : string of text you needed to remove the wired chars """
     weridPatterns = re.compile("["
                                u"\U0001F600-\U0001F64F"  # emoticons
                                u"\U0001F300-\U0001F5FF"  # symbols & pictographs
@@ -33,7 +36,7 @@ def removeWeirdChars(text):
 def remove_punctuation(text: str):
     """this function to remove the punctuation
     parameter:
-    text:string """
+    text:string of the text """
     tokenizer = RegexpTokenizer(r'\w+')
     return " ".join(tokenizer.tokenize(text))
 
@@ -41,7 +44,7 @@ def remove_punctuation(text: str):
 def remove_stop_words(text: str, stopwords: list):
     """this function to remove the stop words
     parameter:
-    text:string
+    text:string of the text
     stopwords : list of string words you need deleted"""
     text_tokens = nltk.tokenize.wordpunct_tokenize(text)
     return " ".join([word for word in text_tokens if not word in stopwords])

@@ -56,12 +56,14 @@ def csv_to_txt_train_test_group_without_preprocess(in_file_path: str, name_of_cl
     test_dataset.close()
 
 
-def csv_to_txt_train_test_group_with_preprocess(in_file_path: str, name_of_class: str, columns: list):
+def csv_to_txt_train_test_group_with_preprocess(in_file_path: str, name_of_class: str, columns: list,
+                                                stop_words_dir: str):
     """this function to split the csv to 80% train,20% test next preprocess the line then convert every line to [index].txt
     parameters:
     inFilePath:string path of csv file
     nameOfClass:string name of classes
-    columns:list string what column name you need to detect """
+    columns:list string what column name you need to detect
+     stop_words_dir : string of bath the stop word list"""
     # split the data to train 80% and test 20%
     in_file = pd.read_csv(in_file_path)
     in_file['split'] = np.random.randn(in_file.shape[0], 1)
@@ -90,8 +92,7 @@ def csv_to_txt_train_test_group_with_preprocess(in_file_path: str, name_of_class
             continue
         else:
             row_text = "".join(row)
-            row_after_process = preprocess_text(row_text,
-                                                '/home/ahmad/Desktop/classificationTextProject/testdata/arabic-stop')
+            row_after_process = preprocess_text(row_text, stop_words_dir)
             out_file = train_output_txt + "/{}.txt".format(tra)
             with open(out_file, "w") as my_output_file:
                 my_output_file.write("".join(row_after_process))
