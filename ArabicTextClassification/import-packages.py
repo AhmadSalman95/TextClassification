@@ -30,3 +30,4 @@ def upgrade(package : str):
 # upgrade("tensorflow")
 # install("pyLDAvis")
 # install("IPython")
+# install("eli5")

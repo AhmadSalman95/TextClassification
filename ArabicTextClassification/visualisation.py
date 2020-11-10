@@ -3,6 +3,7 @@ from bidi.algorithm import get_display
 from wordcloud import WordCloud
 import os
 import re
+import matplotlib.pyplot as plt
 
 
 def removeWeirdChars(text):
@@ -30,6 +31,7 @@ def removeWeirdChars(text):
                                u"\u2067"
                                "]+", flags=re.UNICODE)
     return weridPatterns.sub(r'', text)
+
 
 def visualisation_vocabulary_folder(files_dir: str, status_of_preprocess: bool, output_dir_images: str):
     """this method visulisation all files in folder but .txt
@@ -75,3 +77,16 @@ def visualisation_vocabulary_file(text: str, output_dir: str, name_of_output_fil
     word_cloud = WordCloud(font_path='NotoNaskhArabic-Regular.ttf').generate(textArabic)
     output_image = "{}/{}.png".format(output_dir, name_of_output_file)
     word_cloud.to_file(output_image)
+
+
+def plot_graphs(history, string, name_image):
+    name = "{}.png".format(name_image)
+    fig = plt.figure()
+    plt.plot(history.history[string])
+    plt.plot(history.history['val_'+string])
+    plt.xlabel('Epochs')
+    plt.ylabel(string)
+    plt.legend([string, 'val_'+string])
+    fig.savefig(name)
+
+
